@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+table {
+  margin: 100px auto;
+  width: 50%;
+  table-layout: fixed;
+  cursor: pointer;
+}
+th:nth-of-type(1) {
+  width: 110px;
+}
+td {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+#buttons {
+  text-align: center;
+}
+#clearBtn {
+  margin-right: 20px;
+  color: #FF5900;
+}
+#saveBtn {
+  color: #2CAC9D;
+}
+#clearBtn, #saveBtn {
+  border-radius: 20px;
+  height: 60px;
+  width: 300px;
+  font-weight: bold;
+  margin-top: -100px;
+  box-shadow: none;
+}
+.position {
+  transform: rotate(-90.0deg);
+  font-weight: bold;
+}
+.selected{
+  background: silver;
+}
