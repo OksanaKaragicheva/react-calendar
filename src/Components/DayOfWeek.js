@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
 
-
-let bt = 0;
-let et = 0;
-let countOfSelectedCellsInARow = 0;
+//import $ from 'jquery';
 
 class DayOfWeek extends Component {
   constructor(props) {
@@ -49,15 +45,25 @@ class DayOfWeek extends Component {
 };
 }
 
+handleDayHourMouseClick(day, hour, e){
+  //change state object to add new bt/be or extend existent bt/be
+  //or ignore if needed
+  console.log(day, hour);
+}
+handleDayHourMouseMove(day, hour, e){
+
+}
+
 render() {
     let days = Object.keys(this.state.initialState).map(
-      (day, index) => <DayRow dayName = {day} border = {this.props.border} borderAll={this.props.borderAll}/>
+      (day, index) => <DayRow dayName = {day}
+                              border = {this.props.border}
+                              borderAll={this.props.borderAll}
+                              dayState = {this.state.initialState[day]}
+                              onClick = {this.handleDayHourMouseClick}
+                              onMove = {this.handleDayHourMouseMove}/>
     );
-    return (
-          <div>
-           {days}
-          </div>
-    );
+    return (<React.Fragment> {days} </React.Fragment>);
   }
 }
 
@@ -65,10 +71,21 @@ class DayRow extends Component {
   constructor(props) {
     super(props);
   }
+
+  ifGrey(d, h) {
+      return !d.every( el => h*60 < el.bt || h*60 > el.et );
+  }
+
   render () {
-    {/*TODO: hour color should be computed according to day and hour/index and
-       pass to hour as prop*/}
-    let hours = [...Array(24)].map((el, index) => <Hour border={this.props.border}/>)
+    let hours = [...Array(24)].map((el, index) =>
+        <Hour border={this.props.border}
+          cellGrey = {this.ifGrey(this.props.dayState, index)}
+          borderAll={this.props.borderAll}
+          hourProp = {{OnClickHandler: this.props.onClick,
+                      OnMoveHandler: this.props.onMove,
+                      day: this.props.dayName,
+                      hour: index}}
+        />)
     return (
         <tr key={this.props.dayName}>
         <DayCell dayName = {this.props.dayName} border = {this.props.border} />
@@ -85,7 +102,7 @@ class DayCell extends Component {
     super(props);
   }
   render () {
-    return (<th scope="row" style={this.props.border} onMouseDown={this.allDay}>
+    return (<th scope="row" style={this.props.border}>
       {this.props.dayName.toUpperCase()}
     </th>);
   }
@@ -96,6 +113,8 @@ class AllDay extends Component {
     super(props);
   }
   render () {
+    //TODO: Add onMouseDown which should use callback from DayOfWeek and
+    //parameter dayName callback should change day state to all day selected
     return ( <td style={this.props.borderAll}></td>);
   }
 }
@@ -105,9 +124,7 @@ class Hour extends Component {
     super(props);
   }
   render () {
-    {/*TODO: cell color shoud be set here from prop
-      Cell click should be handled to change state of the cell if needed
-      Mouse move should be used to change selection of current cell if needed
+    {/*TODO:
       Use rule: mouse move should be in the same row. When mouse go out from
       selection row, just stop selection, clear selected items. The same rule if
       selection start to overlap some existent selection in the row.
@@ -116,7 +133,13 @@ class Hour extends Component {
       While selection continue, update next cells. If selection is canceled,
       clear selection from first started to last valid cell*/}
 
-    return ( <td style={this.props.border} data-value={0}> </td>);
+    return ( <td  style={this.props.cellGrey ? this.props.borderAll : this.props.border }
+                  onMouseDown={
+                    (e) => this.props.hourProp.OnClickHandler(
+                        this.props.hourProp.day,
+                        this.props.hourProp.hour, e)} >
+             </td>
+            );
   }
 }
 
