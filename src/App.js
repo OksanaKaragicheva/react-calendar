@@ -5,6 +5,7 @@ import Head from "./Components/Head";
 
 const back = {"background": "#8F9BA6"};
 const border = {"borderBottom": "2px solid black", "verticalAlign": "middle"};
+const borderAllField = {"borderBottom": "2px solid black", "background": "darkGrey"}
 const noneBorder = {"borderTop": "1px solid white", "borderRight": "1px solid white"};
 const noneTopBorder = {"borderTop": "1px solid white"};
 const noneLeftBorder = {"borderLeft": "2px solid white"};
@@ -23,7 +24,7 @@ class App extends Component {
       <table className="table-bordered">
        <tbody>
          <Head colspan={2} border={border} noneBorder={noneBorder} noneTopBorder={noneTopBorder} noneLeftBorder={noneLeftBorder} />
-         <DayOfWeek head="MO" back={back} border={border} />
+         <DayOfWeek back={back} border={border} borderAll={borderAllField}/>
 
        </tbody>
       </table>

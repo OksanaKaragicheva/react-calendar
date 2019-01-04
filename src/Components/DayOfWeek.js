@@ -51,17 +51,16 @@ class DayOfWeek extends Component {
 
 render() {
     let days = Object.keys(this.state.initialState).map(
-      (day, index) => <DayRow dayName = {day} border = {this.props.border}/>
+      (day, index) => <DayRow dayName = {day} border = {this.props.border} borderAll={this.props.borderAll}/>
     );
     return (
-      //TODO: why does not work without div? may be kind of Table should be
-      // used here
-      <div>
-        {days}
-      </div>
+          <div>
+           {days}
+          </div>
     );
   }
 }
+
 class DayRow extends Component {
   constructor(props) {
     super(props);
@@ -69,10 +68,11 @@ class DayRow extends Component {
   render () {
     {/*TODO: hour color should be computed according to day and hour/index and
        pass to hour as prop*/}
-    let hours = [...Array(24)].map(el => <Hour border = {this.props.border}/>)
+    let hours = [...Array(24)].map((el, index) => <Hour border={this.props.border}/>)
     return (
-        <tr id="tableRow" key={this.props.dayName}>
-        <DayCell dayName = {this.props.dayName}/>
+        <tr key={this.props.dayName}>
+        <DayCell dayName = {this.props.dayName} border = {this.props.border} />
+        <AllDay borderAll={this.props.borderAll} />
         {hours}
         </tr>
     );
@@ -85,10 +85,18 @@ class DayCell extends Component {
     super(props);
   }
   render () {
-    // TODO: idea: Let's day name will be the cell for ALL day selection
     return (<th scope="row" style={this.props.border} onMouseDown={this.allDay}>
       {this.props.dayName.toUpperCase()}
     </th>);
+  }
+}
+
+class AllDay extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render () {
+    return ( <td style={this.props.borderAll}></td>);
   }
 }
 

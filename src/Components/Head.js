@@ -4,8 +4,8 @@ import $ from 'jquery';
 
 const Head = (props) => {
   return (
-<tr id="tableRow">
-<th scope="row" style={Object.assign({}, props.noneLeftBorder, props.noneTopBorder, props.border)} colSpan={props.colspan}>
+    <tr id="tableRow">
+<th scope="col" style={Object.assign({}, props.noneLeftBorder, props.noneTopBorder, props.border)} colSpan={props.colspan}>
 ALL DAY &#8659;
 </th>
 <td className="position" style={Object.assign({}, props.back, props.border, props.noneTopBorder)}>
@@ -66,6 +66,7 @@ ALL DAY &#8659;
 </td>
 
 </tr>
+
 );
 };
 

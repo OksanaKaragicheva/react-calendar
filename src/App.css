@@ -8,16 +8,17 @@ table {
   table-layout: fixed;
   cursor: pointer;
 }
-th:nth-of-type(1) {
-  width: 110px;
-}
+
 td {
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  width: 1px;
+
 }
+
 #buttons {
   text-align: center;
 }
