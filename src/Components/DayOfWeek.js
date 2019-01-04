@@ -49,109 +49,67 @@ class DayOfWeek extends Component {
 };
 }
 
-fillOneCell = (e) => {
-  $(e.target).toggleClass('selected');
-  $('td').on('mouseenter',function(){
-    $(this).toggleClass('selected');
-  }).mouseup(function(){
-    $('td').off('mouseenter');
-  });
-
-
-}
-
-allDay = (e) => {
-    $('td').addClass('selected');
-}
-
-checkForRangeEntry = (day) => {
-this.state.initialState[day];
-}
-
-
 render() {
-   //console.log(this.state.initialState['mo']);
+    let days = Object.keys(this.state.initialState).map(
+      (day, index) => <DayRow dayName = {day} border = {this.props.border}/>
+    );
     return (
-      Object.keys(this.state.initialState).map((day, index) => {
-        var arrayOfSelectedCells = this.state.initialState[day];
-          arrayOfSelectedCells.map((range, index) => {
-             bt = range.bt;
-             et = range.et;
-             countOfSelectedCellsInARow = Math.round((et - bt) / 60);
-
-             console.log(countOfSelectedCellsInARow);
-             console.log(bt);
-             console.log(et);
-            // console.log($("td"));
-            // if (($("td").data("value") < et) && ($("td").data("value") >= bt)) {
-               $('td').addClass("selected");
-            // }
-
-
-          });
-        return (
-    <tr id="tableRow" key={day}>
-    <th scope="row" style={this.props.border}>
-      {day.toUpperCase()}
-    </th>
-    <td style={Object.assign({}, this.props.back, this.props.border, this.props.noneTopBorder)} onMouseDown={this.allDay}>
-    </td>
-    <td style={this.props.border} data-value={0} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={60} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={120} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={180} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={240} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={300} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={360} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={420} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={480} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={540} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={600} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={660} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={720} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={780} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={840} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={900} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={960} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={1020} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={1080} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={1140} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={1200} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={1260} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={1320} onMouseDown={this.fillOneCell}>
-    </td>
-    <td style={this.props.border} data-value={1380} onMouseDown={this.fillOneCell}>
-    </td>
-    </tr>
-  );
-})
-
-  );
-
+      //TODO: why does not work without div? may be kind of Table should be
+      // used here
+      <div>
+        {days}
+      </div>
+    );
   }
+}
+class DayRow extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render () {
+    {/*TODO: hour color should be computed according to day and hour/index and
+       pass to hour as prop*/}
+    let hours = [...Array(24)].map(el => <Hour border = {this.props.border}/>)
+    return (
+        <tr id="tableRow" key={this.props.dayName}>
+        <DayCell dayName = {this.props.dayName}/>
+        {hours}
+        </tr>
+    );
+  }
+}
 
+
+class DayCell extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render () {
+    // TODO: idea: Let's day name will be the cell for ALL day selection
+    return (<th scope="row" style={this.props.border} onMouseDown={this.allDay}>
+      {this.props.dayName.toUpperCase()}
+    </th>);
+  }
+}
+
+class Hour extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render () {
+    {/*TODO: cell color shoud be set here from prop
+      Cell click should be handled to change state of the cell if needed
+      Mouse move should be used to change selection of current cell if needed
+      Use rule: mouse move should be in the same row. When mouse go out from
+      selection row, just stop selection, clear selected items. The same rule if
+      selection start to overlap some existent selection in the row.
+      When selection is started, save status that selection is started,
+      save first cell index, update its state in the object.
+      While selection continue, update next cells. If selection is canceled,
+      clear selection from first started to last valid cell*/}
+
+    return ( <td style={this.props.border} data-value={0}> </td>);
+  }
 }
 
 export default DayOfWeek;
