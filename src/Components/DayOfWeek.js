@@ -49,6 +49,34 @@ class DayOfWeek extends Component {
 };
 }
 
+componentDidMount() {
+  Object.keys(this.state.initialState).map((day, index) => {
+    var arrayOfSelectedCells = this.state.initialState[day];
+      arrayOfSelectedCells.map((range, index) => {
+         bt = range.bt;
+         et = range.et;
+        // countOfSelectedCellsInARow = Math.round((et - bt) / 60);
+
+        // console.log(countOfSelectedCellsInARow);
+         console.log(bt);
+         console.log(et);
+
+         const arrOfTd = document.querySelectorAll("td");
+         for (var i = 0; i < arrOfTd.length; i++) {
+           if (($(arrOfTd[i]).data('value') < et) && ($(arrOfTd[i]).data('value') >= bt)) {
+             $(arrOfTd[i]).addClass("selected");
+           }
+         }
+
+
+
+      });
+
+
+  });
+  console.log(arrOfTd.length);
+}
+
 fillOneCell = (e) => {
   $(e.target).toggleClass('selected');
   $('td').on('mouseenter',function(){
@@ -77,15 +105,14 @@ render() {
           arrayOfSelectedCells.map((range, index) => {
              bt = range.bt;
              et = range.et;
-             countOfSelectedCellsInARow = Math.round((et - bt) / 60);
+            // countOfSelectedCellsInARow = Math.round((et - bt) / 60);
 
-             console.log(countOfSelectedCellsInARow);
+            // console.log(countOfSelectedCellsInARow);
              console.log(bt);
              console.log(et);
-            // console.log($("td"));
-            // if (($("td").data("value") < et) && ($("td").data("value") >= bt)) {
-               $('td').addClass("selected");
-            // }
+
+
+
 
 
           });
